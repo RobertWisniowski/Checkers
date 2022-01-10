@@ -1,0 +1,15 @@
+import pygame
+
+WIDTH = 1000
+HEIGHT = 1000
+ROWS = 8
+COLUMNS = 8
+SQUARE = HEIGHT//ROWS
+
+BLACK = (0, 0, 0)
+WHITE = (255, 255, 255)
+RED = (255, 0, 0)
+
+FPS = 60
+
+GROUND = 10
