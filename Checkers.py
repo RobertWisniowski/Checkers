@@ -7,7 +7,7 @@ import sys
 
 
 def main(WIDTH, ROWS):
-    grid = make_grid(ROWS, WIDTH)
+    grid = makeGrid(ROWS, WIDTH)
     highlightedPiece = None
     currMove = 'W'
     info = font.render("Aby zresetować grę naciśnij dowolny przycisk na klawiaturze.", True, RED)
@@ -25,10 +25,10 @@ def main(WIDTH, ROWS):
 
         if showWinner() == 'R':
             WIN.blit (REDWIN, (50, 870))
-            grid = make_grid(ROWS, WIDTH)
+            grid = makeGrid(ROWS, WIDTH)
         elif showWinner() == 'W':
             WIN.blit (WHITEWIN, (50, 870))
-            grid = make_grid(ROWS, WIDTH)
+            grid = makeGrid(ROWS, WIDTH)
         
 
         for event in pygame.event.get():
@@ -39,7 +39,7 @@ def main(WIDTH, ROWS):
 
             if event.type == pygame.KEYDOWN:
                 resetPieces()
-                grid = make_grid(ROWS, WIDTH)
+                grid = makeGrid(ROWS, WIDTH)
                 highlightedPiece = None
                 currMove = 'W'
                 WIN.blit (WHITETURN, (50, 870))
@@ -60,7 +60,7 @@ def main(WIDTH, ROWS):
                         if currMove == grid[ClickedPositionColumn][ClickedPositionRow].piece.team:
                             highlightedPiece = highlight(clickedNode, grid, highlightedPiece)
 
-        update_display(WIN, grid,ROWS,WIDTH)
+        updateDisplay(WIN, grid,ROWS,WIDTH)
 
 
 main(WIDTH, ROWS)

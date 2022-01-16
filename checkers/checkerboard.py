@@ -62,7 +62,7 @@ def generatePotentialMoves(nodePosition, grid):
 
     return positions
 
-def HighlightpotentialMoves(piecePosition, grid):
+def highlightpotentialMoves(piecePosition, grid):
     positions = generatePotentialMoves(piecePosition, grid)
     for position in positions:
         Column,Row = position
@@ -80,15 +80,15 @@ def resetColours(grid, node):
         nodeX, nodeY = colouredNodes
         grid[nodeX][nodeY].colour = BLACK if abs(nodeX - nodeY) % 2 == 0 else WHITE
     
-def update_display(win, grid, rows, width):
+def updateDisplay(win, grid, rows, width):
     for row in grid:
         for spot in row:
             spot.draw(win)
-    draw_grid(win, rows, width)
+    drawGrid(win, rows, width)
     pygame.display.update()
 
 
-def draw_grid(win, rows, width):
+def drawGrid(win, rows, width):
     gap = width // ROWS
     for i in range(rows):
         pygame.draw.line(win, BLACK, (0, i * gap), (width, i * gap))
@@ -101,11 +101,11 @@ def highlight(ClickedNode, Grid, OldHighlight):
     if OldHighlight:
         resetColours(Grid, OldHighlight)
 
-    HighlightpotentialMoves(ClickedNode, Grid)
+    highlightpotentialMoves(ClickedNode, Grid)
     return (Column,Row)
 
 
-def make_grid(rows, width):
+def makeGrid(rows, width):
     grid = []
     gap = width// rows
     count = 0

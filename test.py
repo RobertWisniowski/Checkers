@@ -6,7 +6,7 @@ import sys
 
 def testFirstFourMoves():
 
-    grid = make_grid(ROWS, WIDTH)
+    grid = makeGrid(ROWS, WIDTH)
     currMove = 'W'
     highlightedPiece = None
 
@@ -91,7 +91,7 @@ def customCheckerboard2():
     return grid
 
 def testOnePieceDestroyed():
-    grid = make_grid(ROWS, WIDTH)
+    grid = makeGrid(ROWS, WIDTH)
     currMove = 'W'
     highlightedPiece = None
 
@@ -221,7 +221,7 @@ def testMakeKing():
     print('Test nr 5: \"Zamiana pionka w damkę\" działa.')
 
 def testPieceWrongMove():
-    grid = make_grid(ROWS, WIDTH)
+    grid = makeGrid(ROWS, WIDTH)
     currMove = 'W'
     highlightedPiece = None
 
