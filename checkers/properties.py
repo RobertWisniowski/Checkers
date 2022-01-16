@@ -1,11 +1,8 @@
 import pygame
 
-WIDTH = 1000
-HEIGHT = 1000
-import pygame
 
 WIDTH = 800
-HEIGHT = 900
+HEIGHT = 950
 ROWS = 8
 
 REDPIECE= pygame.image.load('red.png')
@@ -17,6 +14,9 @@ REDKING = pygame.image.load('redKing.png')
 WHITEKING = pygame.image.load('whiteKing.png')
 REDKINGCHOOSEN = pygame.image.load('redKingChoosen.png')
 WHITEKINGCHOOSEN = pygame.image.load('whiteKingChoosen.png')
+
+PROHIBITEDMOVE = pygame.image.load('prohibitedMove.png')
+ALLOWEDDMOVE = pygame.image.load('allowedMove.png')
 
 WHITETURN = pygame.image.load('whiteTurn.png')
 REDTURN = pygame.image.load('redTurn.png')
