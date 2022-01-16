@@ -25,8 +25,17 @@ def generatePotentialMoves(nodePosition, grid):
     positions= []
     column, row = nodePosition
     if grid[column][row].piece:
-        vectors = [[1, -1], [1, 1]] if grid[column][row].piece.team == "R" else [[-1, -1], [-1, 1]]
+        if grid[column][row].piece.team == "R":
+            grid[column][row].piece.image = REDPIECECHOOSEN
+            vectors = [[1, -1], [1, 1]] 
+        else:
+            vectors = [[-1, -1], [-1, 1]]
+            grid[column][row].piece.image = WHITEPIECECHOOSEN
         if grid[column][row].piece.type=='KING':
+            if grid[column][row].piece.team =='R':
+                grid[column][row].piece.image = REDKINGCHOOSEN
+            else:
+                grid[column][row].piece.image = WHITEKINGCHOOSEN
             vectors = [[1, -1], [1, 1],[-1, -1], [-1, 1]]
         for vector in vectors:
             columnVector, rowVector = vector
@@ -60,28 +69,6 @@ def resetColours(grid, node):
     for colouredNodes in positions:
         nodeX, nodeY = colouredNodes
         grid[nodeX][nodeY].colour = BLACK if abs(nodeX - nodeY) % 2 == 0 else WHITE
-
-
-def move(grid, piecePosition, newPosition):
-    resetColours(grid, piecePosition)
-    newColumn, newRow = newPosition
-    oldColumn, oldRow = piecePosition
-
-    piece = grid[oldColumn][oldRow].piece
-    grid[newColumn][newRow].piece=piece
-    grid[oldColumn][oldRow].piece = None
-
-    if newColumn==7 and grid[newColumn][newRow].piece.team=='R':
-        grid[newColumn][newRow].piece.type='KING'
-        grid[newColumn][newRow].piece.image=REDKING
-    if newColumn==0 and grid[newColumn][newRow].piece.team=='W':
-        grid[newColumn][newRow].piece.type='KING'
-        grid[newColumn][newRow].piece.image=WHITEKING
-    if abs(newColumn-oldColumn)==2 or abs(newRow-oldRow)==2:
-        grid[int((newColumn+oldColumn)/2)][int((newRow+oldRow)/2)].piece = None
-        return grid[newColumn][newRow].piece.team
-    return opposite(grid[newColumn][newRow].piece.team)
-
     
 def update_display(win, grid, rows, width):
     for row in grid:
