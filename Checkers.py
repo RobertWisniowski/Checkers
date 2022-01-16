@@ -12,12 +12,16 @@ def main(WIDTH, ROWS):
     currMove = 'W'
     info = font.render("Aby zresetować grę naciśnij dowolny przycisk na klawiaturze.", True, RED)
     WIN.blit (info, (50, 830))
-    prohibitedMoveInfo = ALLOWEDDMOVE
-    WIN.blit (prohibitedMoveInfo, (50, 910))
     
 
 
     while True:
+
+        if currMove == 'W':
+            WIN.blit (WHITETURN, (50, 870))
+        elif currMove == 'R':
+            WIN.blit (REDTURN, (50, 870))
+
 
         if showWinner() == 'R':
             WIN.blit (REDWIN, (50, 870))
@@ -26,12 +30,6 @@ def main(WIDTH, ROWS):
             WIN.blit (WHITEWIN, (50, 870))
             grid = make_grid(ROWS, WIDTH)
         
-        if currMove == 'W':
-                WIN.blit (WHITETURN, (50, 870))
-        elif currMove == 'R':
-                WIN.blit (REDTURN, (50, 870))
-        else:
-            pass
 
         for event in pygame.event.get():
             if event.type== pygame.QUIT:

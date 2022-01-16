@@ -175,17 +175,42 @@ def resetPieces():
     global whitePiecesCount
     global winner
     global gameIsOver
-    gameIsOver == False
+    gameIsOver = False
     winner = "None"
     redPiecesCount = 12
     whitePiecesCount = 12
 
+def changePiecesCount(red, white):
+    global redPiecesCount
+    global whitePiecesCount 
+    redPiecesCount = red
+    whitePiecesCount = white
+
+
 def showWinner():
     global winner
+    return winner
+
+
+def showIfGameIsOver():
     global gameIsOver
-    if gameIsOver == True:
-        return winner
+    return gameIsOver
+
+def movePieces(grid, clickedNode, highlightedPiece, currMove):
+    ClickedPositionColumn, ClickedPositionRow = clickedNode
+    if grid[ClickedPositionColumn][ClickedPositionRow].colour == BLUE:
+        if highlightedPiece:
+            pieceColumn, pieceRow = highlightedPiece
+        if currMove == grid[pieceColumn][pieceRow].piece.team:
+            resetColours(grid, highlightedPiece)
+            currMove=move(grid, highlightedPiece, clickedNode)
+    elif highlightedPiece == clickedNode:
+        pass
     else:
-        return NULL
+        if grid[ClickedPositionColumn][ClickedPositionRow].piece:
+            if currMove == grid[ClickedPositionColumn][ClickedPositionRow].piece.team:
+                highlightedPiece = highlight(clickedNode, grid, highlightedPiece)
+    return currMove
+
 
     
