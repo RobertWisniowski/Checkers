@@ -5,6 +5,12 @@ from checkers.checkerboard import *
 from checkers.piece import*
 import sys
 
+gameIsOver = False
+winner ='None'
+redPiecesCount = 12
+whitePiecesCount = 12
+
+
 def highlight(ClickedNode, Grid, OldHighlight):
     Column,Row = ClickedNode
     Grid[Column][Row].colour=ORANGE
@@ -40,9 +46,18 @@ def getNode(grid, rows, width):
     Col = RowY//gap
     return (Col,Row)
 
+def gameOver(grid,newColumn, newRow):
+    global gameIsOver
+    gameIsOver = True
+    global winner
+    winner = grid[newColumn][newRow].piece.team
+
 
 
 def move(grid, piecePosition, newPosition):
+
+    global redPiecesCount
+    global whitePiecesCount
     resetColours(grid, piecePosition)
     newColumn, newRow = newPosition
     oldColumn, oldRow = piecePosition
@@ -59,6 +74,13 @@ def move(grid, piecePosition, newPosition):
 
     if abs(newColumn-oldColumn)==2 or abs(newRow-oldRow)==2:
         grid[int((newColumn+oldColumn)/2)][int((newRow+oldRow)/2)].piece = None
+        if grid[newColumn][newRow].piece.team=='R':
+            whitePiecesCount -= 1
+        else:
+
+            redPiecesCount -= 1
+        if redPiecesCount == 0 or whitePiecesCount == 0:
+            gameOver(grid,newColumn, newRow)
         return grid[newColumn][newRow].piece.team
     return opposite(grid[newColumn][newRow].piece.team)
 
@@ -66,13 +88,47 @@ def main(WIDTH, ROWS):
     grid = make_grid(ROWS, WIDTH)
     highlightedPiece = None
     currMove = 'W'
+    global redPiecesCount
+    global whitePiecesCount
+    global gameIsOver
+    global winner
+    info = font.render("Aby zresetować grę naciśnij dowolny przycisk na klawiaturze.", True, RED)
+    WIN.blit (info, (50, 830))
+    
+
 
     while True:
+
+        if gameIsOver == True:
+            currMove = 'None'
+            if winner == 'R':
+                WIN.blit (REDWIN, (50, 870))
+            elif winner == 'W':
+                WIN.blit (WHITEWIN, (50, 870))
+            grid = make_grid(ROWS, WIDTH)
+        
+        if currMove == 'W':
+                WIN.blit (WHITETURN, (50, 870))
+        elif currMove == 'R':
+                WIN.blit (REDTURN, (50, 870))
+        else:
+            currMove = "None"
+
         for event in pygame.event.get():
             if event.type== pygame.QUIT:
                 print('EXIT SUCCESSFUL')
                 pygame.quit()
                 sys.exit()
+
+            if event.type == pygame.KEYDOWN:
+                whitePiecesCount = 12
+                redPiecesCount = 12
+                gameIsOver == False
+                winner = "None"
+                grid = make_grid(ROWS, WIDTH)
+                highlightedPiece = None
+                currMove = 'W'
+                WIN.blit (WHITETURN, (50, 870))
 
             if event.type == pygame.MOUSEBUTTONDOWN:
                 clickedNode = getNode(grid, ROWS, WIDTH)

@@ -14,6 +14,8 @@ class Node:
         self.y = int(col * width)
         self.colour = WHITE
         self.piece = None
+        self.piecesWhite = 12
+        self.piecesRed = 12
 # draw rysuje 
     def draw(self, WIN):
         pygame.draw.rect(WIN, self.colour, (self.x, self.y, WIDTH / ROWS, WIDTH / ROWS))
@@ -84,3 +86,4 @@ def draw_grid(win, rows, width):
         pygame.draw.line(win, BLACK, (0, i * gap), (width, i * gap))
         for j in range(rows):
             pygame.draw.line(win, BLACK, (j * gap, 0), (j * gap, width))
+            
