@@ -4,46 +4,6 @@ from checkers.properties import *
 from checkers.checkerboard import *
 import sys
 
-def testFirstFourMoves():
-
-    grid = makeGrid(ROWS, WIDTH)
-    currMove = 'W'
-    highlightedPiece = None
-
-    rows = (5, 4, 2, 3, 5, 4, 2, 3)
-    columns = (1, 2, 0, 1, 5, 6, 4, 5)
-
-    for i in range(0,8):
-
-        clickedNode = (rows[i], columns[i])
-        ClickedPositionColumn, ClickedPositionRow = clickedNode
-        if grid[ClickedPositionColumn][ClickedPositionRow].colour == BLUE:
-            if highlightedPiece:
-                pieceColumn, pieceRow = highlightedPiece
-            if currMove == grid[pieceColumn][pieceRow].piece.team:
-                resetColours(grid, highlightedPiece)
-                currMove=move(grid, highlightedPiece, clickedNode)
-        elif highlightedPiece == clickedNode:
-            pass
-        else:
-            if grid[ClickedPositionColumn][ClickedPositionRow].piece:
-                if currMove == grid[ClickedPositionColumn][ClickedPositionRow].piece.team:
-                    highlightedPiece = highlight(clickedNode, grid, highlightedPiece)
-
-
-    assert grid[rows[1]][columns[1]].piece.team == 'W'
-    assert grid[rows[3]][columns[3]].piece.team == 'R'
-    assert grid[rows[5]][columns[5]].piece.team == 'W'
-    assert grid[rows[7]][columns[7]].piece.team == 'R'
-
-    assert grid[rows[0]][columns[0]].piece == None
-    assert grid[rows[2]][columns[2]].piece == None
-    assert grid[rows[4]][columns[4]].piece == None
-    assert grid[rows[6]][columns[6]].piece == None
-
-    print('Test nr 1: \"Wykonanie po dwa ruchy przez każdego z graczy\" działa.')
-
-
 def customCheckerboard():
     width = 800
     rows = 8
@@ -90,6 +50,75 @@ def customCheckerboard2():
             grid[i].append(node)
     return grid
 
+def testFirstFourMoves():
+
+    grid = makeGrid(ROWS, WIDTH)
+    currMove = 'W'
+    highlightedPiece = None
+
+    rows = (5, 4, 2, 3, 5, 4, 2, 3)
+    columns = (1, 2, 0, 1, 5, 6, 4, 5)
+
+    for i in range(0,8):
+
+        clickedNode = (rows[i], columns[i])
+        ClickedPositionColumn, ClickedPositionRow = clickedNode
+        if grid[ClickedPositionColumn][ClickedPositionRow].colour == BLUE:
+            if highlightedPiece:
+                pieceColumn, pieceRow = highlightedPiece
+            if currMove == grid[pieceColumn][pieceRow].piece.team:
+                resetColours(grid, highlightedPiece)
+                currMove=move(grid, highlightedPiece, clickedNode)
+        elif highlightedPiece == clickedNode:
+            pass
+        else:
+            if grid[ClickedPositionColumn][ClickedPositionRow].piece:
+                if currMove == grid[ClickedPositionColumn][ClickedPositionRow].piece.team:
+                    highlightedPiece = highlight(clickedNode, grid, highlightedPiece)
+
+
+    assert grid[rows[1]][columns[1]].piece.team == 'W'
+    assert grid[rows[3]][columns[3]].piece.team == 'R'
+    assert grid[rows[5]][columns[5]].piece.team == 'W'
+    assert grid[rows[7]][columns[7]].piece.team == 'R'
+
+    assert grid[rows[0]][columns[0]].piece == None
+    assert grid[rows[2]][columns[2]].piece == None
+    assert grid[rows[4]][columns[4]].piece == None
+    assert grid[rows[6]][columns[6]].piece == None
+
+    print('Test nr 1: \"Wykonanie po dwa ruchy przez każdego z graczy\" działa.')
+
+def testPieceWrongMove():
+    grid = makeGrid(ROWS, WIDTH)
+    currMove = 'W'
+    highlightedPiece = None
+
+    rows = (5, 4)
+    columns = (1, 1)
+
+    for i in range(0,2):
+
+        clickedNode = (rows[i], columns[i])
+        ClickedPositionColumn, ClickedPositionRow = clickedNode
+        if grid[ClickedPositionColumn][ClickedPositionRow].colour == BLUE:
+            if highlightedPiece:
+                pieceColumn, pieceRow = highlightedPiece
+            if currMove == grid[pieceColumn][pieceRow].piece.team:
+                resetColours(grid, highlightedPiece)
+                currMove=move(grid, highlightedPiece, clickedNode)
+        elif highlightedPiece == clickedNode:
+            pass
+        else:
+            if grid[ClickedPositionColumn][ClickedPositionRow].piece:
+                if currMove == grid[ClickedPositionColumn][ClickedPositionRow].piece.team:
+                    highlightedPiece = highlight(clickedNode, grid, highlightedPiece)
+
+    assert grid[5][1].piece.team == 'W'
+    assert grid[4][1].piece == None
+
+    print('Test nr 2: \"Niepowodzenie błędnego ruchu pionkiem\" działa.')
+
 def testOnePieceDestroyed():
     grid = makeGrid(ROWS, WIDTH)
     currMove = 'W'
@@ -121,8 +150,6 @@ def testOnePieceDestroyed():
     assert grid[2][0].piece.team == 'W'
 
     print('Test nr 3: \"Wykonanie bicia pojedynczego pionka\" działa.')
-
-
 
 def testTwoPiecesDestroyed():
     grid = customCheckerboard()
@@ -156,6 +183,37 @@ def testTwoPiecesDestroyed():
 
     print('Test nr 4: \"Wykonanie bicia przynajmniej dwóch pionków\" działa.')
 
+def testMakeKing():
+    grid = customCheckerboard()
+    currMove = 'W'
+    highlightedPiece = None
+
+    rows = (1, 0)
+    columns = (5, 6)
+
+    for i in range(0,2):
+
+        clickedNode = (rows[i], columns[i])
+        ClickedPositionColumn, ClickedPositionRow = clickedNode
+        if grid[ClickedPositionColumn][ClickedPositionRow].colour == BLUE:
+            if highlightedPiece:
+                pieceColumn, pieceRow = highlightedPiece
+            if currMove == grid[pieceColumn][pieceRow].piece.team:
+                resetColours(grid, highlightedPiece)
+                currMove=move(grid, highlightedPiece, clickedNode)
+        elif highlightedPiece == clickedNode:
+            pass
+        else:
+            if grid[ClickedPositionColumn][ClickedPositionRow].piece:
+                if currMove == grid[ClickedPositionColumn][ClickedPositionRow].piece.team:
+                    highlightedPiece = highlight(clickedNode, grid, highlightedPiece)
+
+    assert grid[1][5].piece == None
+    assert grid[0][6].piece.team == 'W'
+    assert grid[0][6].piece.type == 'KING'
+
+    print('Test nr 5: \"Zamiana pionka w damkę\" działa.')
+
 def testPieceDestroyedByKing():
     grid = customCheckerboard()
     currMove = 'W'
@@ -188,67 +246,6 @@ def testPieceDestroyedByKing():
 
     print('Test nr 6: \"Bicie damką\" działa.')
 
-
-def testMakeKing():
-    grid = customCheckerboard()
-    currMove = 'W'
-    highlightedPiece = None
-
-    rows = (1, 0)
-    columns = (5, 6)
-
-    for i in range(0,2):
-
-        clickedNode = (rows[i], columns[i])
-        ClickedPositionColumn, ClickedPositionRow = clickedNode
-        if grid[ClickedPositionColumn][ClickedPositionRow].colour == BLUE:
-            if highlightedPiece:
-                pieceColumn, pieceRow = highlightedPiece
-            if currMove == grid[pieceColumn][pieceRow].piece.team:
-                resetColours(grid, highlightedPiece)
-                currMove=move(grid, highlightedPiece, clickedNode)
-        elif highlightedPiece == clickedNode:
-            pass
-        else:
-            if grid[ClickedPositionColumn][ClickedPositionRow].piece:
-                if currMove == grid[ClickedPositionColumn][ClickedPositionRow].piece.team:
-                    highlightedPiece = highlight(clickedNode, grid, highlightedPiece)
-
-    assert grid[1][5].piece == None
-    assert grid[0][6].piece.team == 'W'
-    assert grid[0][6].piece.type == 'KING'
-
-    print('Test nr 5: \"Zamiana pionka w damkę\" działa.')
-
-def testPieceWrongMove():
-    grid = makeGrid(ROWS, WIDTH)
-    currMove = 'W'
-    highlightedPiece = None
-
-    rows = (5, 4)
-    columns = (1, 1)
-
-    for i in range(0,2):
-
-        clickedNode = (rows[i], columns[i])
-        ClickedPositionColumn, ClickedPositionRow = clickedNode
-        if grid[ClickedPositionColumn][ClickedPositionRow].colour == BLUE:
-            if highlightedPiece:
-                pieceColumn, pieceRow = highlightedPiece
-            if currMove == grid[pieceColumn][pieceRow].piece.team:
-                resetColours(grid, highlightedPiece)
-                currMove=move(grid, highlightedPiece, clickedNode)
-        elif highlightedPiece == clickedNode:
-            pass
-        else:
-            if grid[ClickedPositionColumn][ClickedPositionRow].piece:
-                if currMove == grid[ClickedPositionColumn][ClickedPositionRow].piece.team:
-                    highlightedPiece = highlight(clickedNode, grid, highlightedPiece)
-
-    assert grid[5][1].piece.team == 'W'
-    assert grid[4][1].piece == None
-
-    print('Test nr 2: \"Niepowodzenie błędnego ruchu pionkiem\" działa.')
 
 def testRedWins():
     grid = customCheckerboard2()
@@ -321,7 +318,6 @@ def testRestartGameAfterWin():
 
     print('Test nr 8: \"Rozpoczęcie nowej gry po zwycięstwie jednego z graczy\" działa.')
 
-
 def main():
     while True:
         print('\nZestaw testów do projektu p.t. \"Warcaby\".\n\n')
@@ -355,6 +351,5 @@ def main():
             testRestartGameAfterWin()
         else:
             print('Nie ma takiej wartości na liście')
-
 
 main()

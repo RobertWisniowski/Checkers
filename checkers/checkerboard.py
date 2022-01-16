@@ -12,7 +12,6 @@ whitePiecesCount = 12
 gameIsOver = False
 winner ='None'
 
-
 # klasa Node definiuje parametry tła szachownicy
 class Node:
     def __init__(self, row, col, width):
@@ -71,7 +70,6 @@ def highlightpotentialMoves(piecePosition, grid):
 def opposite(team):
     return "R" if team=="W" else "W"
 
-
 def resetColours(grid, node):
     positions = generatePotentialMoves(node, grid)
     positions.append(node)
@@ -100,7 +98,6 @@ def highlight(ClickedNode, Grid, OldHighlight):
     Grid[Column][Row].colour=ORANGE
     if OldHighlight:
         resetColours(Grid, OldHighlight)
-
     highlightpotentialMoves(ClickedNode, Grid)
     return (Column,Row)
 
@@ -138,10 +135,7 @@ def gameOver(grid,newColumn, newRow):
     global winner
     winner = grid[newColumn][newRow].piece.team
 
-
-
 def move(grid, piecePosition, newPosition):
-
     global redPiecesCount
     global whitePiecesCount
     resetColours(grid, piecePosition)
@@ -186,31 +180,14 @@ def changePiecesCount(red, white):
     redPiecesCount = red
     whitePiecesCount = white
 
-
 def showWinner():
     global winner
     return winner
-
 
 def showIfGameIsOver():
     global gameIsOver
     return gameIsOver
 
-def movePieces(grid, clickedNode, highlightedPiece, currMove):
-    ClickedPositionColumn, ClickedPositionRow = clickedNode
-    if grid[ClickedPositionColumn][ClickedPositionRow].colour == BLUE:
-        if highlightedPiece:
-            pieceColumn, pieceRow = highlightedPiece
-        if currMove == grid[pieceColumn][pieceRow].piece.team:
-            resetColours(grid, highlightedPiece)
-            currMove=move(grid, highlightedPiece, clickedNode)
-    elif highlightedPiece == clickedNode:
-        pass
-    else:
-        if grid[ClickedPositionColumn][ClickedPositionRow].piece:
-            if currMove == grid[ClickedPositionColumn][ClickedPositionRow].piece.team:
-                highlightedPiece = highlight(clickedNode, grid, highlightedPiece)
-    return currMove
 
 
     

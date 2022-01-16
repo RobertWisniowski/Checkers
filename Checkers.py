@@ -4,16 +4,12 @@ from checkers.properties import *
 from checkers.checkerboard import *
 import sys
 
-
-
 def main(WIDTH, ROWS):
     grid = makeGrid(ROWS, WIDTH)
     highlightedPiece = None
     currMove = 'W'
     info = font.render("Aby zresetować grę naciśnij dowolny przycisk na klawiaturze.", True, RED)
     WIN.blit (info, (50, 830))
-    
-
 
     while True:
 
@@ -22,7 +18,6 @@ def main(WIDTH, ROWS):
         elif currMove == 'R':
             WIN.blit (REDTURN, (50, 870))
 
-
         if showWinner() == 'R':
             WIN.blit (REDWIN, (50, 870))
             grid = makeGrid(ROWS, WIDTH)
@@ -30,7 +25,6 @@ def main(WIDTH, ROWS):
             WIN.blit (WHITEWIN, (50, 870))
             grid = makeGrid(ROWS, WIDTH)
         
-
         for event in pygame.event.get():
             if event.type== pygame.QUIT:
                 print('EXIT SUCCESSFUL')
@@ -61,6 +55,5 @@ def main(WIDTH, ROWS):
                             highlightedPiece = highlight(clickedNode, grid, highlightedPiece)
 
         updateDisplay(WIN, grid,ROWS,WIDTH)
-
 
 main(WIDTH, ROWS)
