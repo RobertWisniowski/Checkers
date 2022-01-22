@@ -12,7 +12,6 @@ whitePiecesCount = 12
 gameIsOver = False
 winner ='None'
 
-# klasa Node definiuje parametry tła szachownicy
 class Node:
     def __init__(self, row, col, width):
         self.row = row
@@ -23,12 +22,13 @@ class Node:
         self.piece = None
         self.piecesWhite = 12
         self.piecesRed = 12
-# draw rysuje 
+
     def draw(self, WIN):
         pygame.draw.rect(WIN, self.colour, (self.x, self.y, WIDTH / ROWS, WIDTH / ROWS))
         if self.piece:
             WIN.blit(self.piece.image, (self.x, self.y))
-
+    def help(self):
+        print("Klasa przechowuje informacje odpowiedzialne za definiowanie rozmiaru planszy, ilości pionków na początku rozgrywki, koloru pól \"białych\", a także szerokości i wysokości planszy. Prócz tego zawiera metodę draw(), która rysuje kwadratowe pola na planszy.")
 def generatePotentialMoves(nodePosition, grid):
     checker = lambda x,y: x+y>=0 and x+y<8
     positions= []
